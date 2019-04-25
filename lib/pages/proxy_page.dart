@@ -24,7 +24,9 @@ class _ProxyPageState extends State<ProxyPage> {
 
   AppBar _proxyAppBar(){
     return AppBar(
+      primary: true,
       backgroundColor: Colors.white,
+      elevation: 0.0,
       title: TabBar(
         isScrollable: true,
         indicatorSize: TabBarIndicatorSize.label,
