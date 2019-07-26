@@ -2,20 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:flutter_work/pages/home_page.dart';
-import 'package:flutter_work/pages/cart_page.dart';
+import 'package:flutter_work/pages/mail_list_page.dart';
 import 'package:flutter_work/pages/proxy_page.dart';
-import 'package:flutter_work/pages/membedr_page.dart';
-import 'package:flutter_work/common/style/wm_style.dart';
+import 'package:flutter_work/pages/member_page.dart';
+import 'package:flutter_work/common/style/style.dart';
+import 'package:flutter_work/provide/current_index_provide.dart';
+import 'package:provide/provide.dart';
 
 
-class IndexPage extends StatefulWidget {
-  @override
-  _IndexPageState createState() => _IndexPageState();
-}
+class IndexPage extends StatelessWidget {
 
-class _IndexPageState extends State<IndexPage> {
-
-  int currentIndex = 0;
   var currentPage;
 
   final List<BottomNavigationBarItem> bottomTabs = [
@@ -44,43 +40,31 @@ class _IndexPageState extends State<IndexPage> {
   final List tabBodies = [
     HomePage(),
     ProxyPage(),
-    CartPage(),
-    MembedrPage()
+    MailListPage(),
+    MemberPage()
   ];
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    currentPage = tabBodies[currentIndex];
-
-  }
 
   @override
   Widget build(BuildContext context) {
 
-    //设置字体大小根据系统的“字体大小”辅助选项来进行缩放,默认为false
-    ScreenUtil.instance = ScreenUtil(width: 375, height: 667, allowFontScaling: true)..init(context);
-    print('设备像素密度：${ScreenUtil.pixelRatio}');
-    print('设备的高：${ScreenUtil.screenHeight}');
-    print('设备的宽：${ScreenUtil.screenWidth}');
-
-    return Container(
-      child: Scaffold(
-        backgroundColor: Color.fromRGBO(244,245,245,1.0),
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          currentIndex: currentIndex,
-          items: bottomTabs,
-          onTap: (index){
-            setState(() {
-              currentIndex = index;
-              currentPage = tabBodies[currentIndex];
-            });
-          },
-        ),
-        body: currentPage,
-      ),
+    return Provide<CurrentIndexProvide>(
+      builder: (context,child,data){
+        int currentIndex= Provide.value<CurrentIndexProvide>(context).currentIndex;
+        return Container(
+          child: Scaffold(
+            backgroundColor: Color.fromRGBO(244,245,245,1.0),
+            bottomNavigationBar: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              currentIndex: currentIndex,
+              items: bottomTabs,
+              onTap: (index){
+                Provide.value<CurrentIndexProvide>(context).changeIndex(index);
+              },
+            ),
+            body: tabBodies[currentIndex],
+          ),
+        );
+      },
     );
   }
 }

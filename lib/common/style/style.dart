@@ -2,24 +2,28 @@ import 'package:flutter/material.dart';
 
 /// 颜色
 class WMColors {
-  static const String primaryValueString = "#24292E";
+  static const Color primaryColor = Color(0xFF559EF7);
   static const String primaryLightValueString = "#42464b";
   static const String primaryDarkValueString = "#121917";
   static const String miWhiteString = "#ececec";
   static const String actionBlueString = "#267aff";
   static const String webDraculaBackgroundColorString = "#282a36";
 
-
 }
 
 class WMConstant {
+  static const double PAGE_SIZE = 14.0;
   
 }
 
 class WMIcons {
   static const String FONT_FAMILY = 'wmIconFont';
+  static const String IMAGE_URL = 'http://upyun-img.wumart.com';
 
-  static const String DEFAULT_USER_ICON = 'static/images/logo.png';
+  static const String IMAGE_LOGO = IMAGE_URL+'/wmhelper/common/img/logo.png';
+  static const String IMAGE_LOGO2 = IMAGE_URL+'/wmhelper/common/img/logo.png';
+  static const String IMAGE_LOADING = 'static/images/loading.gif';
+  static const String IMAGE_NO_NET = 'static/images/no_net.png';
 
   static const IconData WORK = const IconData(0xe636, fontFamily: WMIcons.FONT_FAMILY); // 工作台
   static const IconData WORK_SELECTED = const IconData(0xe637, fontFamily: WMIcons.FONT_FAMILY); // 工作台

@@ -23,11 +23,19 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
-  dio: ^2.1.2
-  json_serializable: ^2.2.1
-  flutter_swiper : ^1.1.6
-  flutter_screenutil: ^0.5.2
-  flutter_easyrefresh: ^1.2.7
+  dio: ^2.1.13 # http请求
+  flutter_swiper: ^1.1.6 # 轮播图
+  flutter_screenutil: ^0.5.3 # 屏幕适配工具类 
+  url_launcher: ^5.1.0 # 启动URL的Flutter插件。支持网络，电话，短信和电子邮件
+  flutter_easyrefresh: ^1.2.7 # 下拉刷新
+  provide: ^1.0.2 # 状态管理
+  fluttertoast: ^3.1.0 # toast提示框
+  fluro: ^1.5.1 # 路由
+  flutter_html: ^0.10.4 # 静态html标记呈现为Flutter小部件
+  shared_preferences: ^0.5.3+4  # 本地存储
+  jpush_flutter: ^0.0.12  # 极光推送
+  shimmer: ^1.0.0  # 微光效果控件
+  flutter_slidable: ^0.5.3  # item侧滑控件
 
 dev_dependencies:
   flutter_test:
@@ -47,7 +55,10 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-   - static/images/banner.png
+   - static/images/logo.png
+   - static/images/logo2.png
+   - static/images/loading.gif
+   - static/images/no_net.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
