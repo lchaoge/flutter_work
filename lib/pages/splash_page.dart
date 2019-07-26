@@ -5,8 +5,9 @@ import 'dart:async';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter_work/router/navigator_util.dart';
 import 'package:flutter_work/common/style/style.dart';
-import 'package:flutter_work/common/utils/utils.dart';
+import 'package:flutter_work/common/utils/public_utils.dart';
 import 'package:flutter_work/provide/user_info_provide.dart';
+import 'package:flutter_work/provide/device_provide.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -18,8 +19,7 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   void initState() {
-    super.initState();
-    _t = new Timer(const Duration(milliseconds: 3000), () {
+     _t = new Timer(const Duration(milliseconds: 3000), () {
       try {
         bool isLogin = Provide.value<UserInfoProvide>(context).isLogin;
         if(isLogin){
@@ -28,9 +28,10 @@ class _SplashPageState extends State<SplashPage> {
           NavigatorUtil.goLoginPage(context,true);
         }
       } catch (e) {
-        Utils.toast('跳转首页失败');
+        PublicUtils.toast('跳转首页失败');
       }
     });
+    super.initState();
   }
 
   @override
@@ -48,8 +49,8 @@ class _SplashPageState extends State<SplashPage> {
     print('设备的高:${ScreenUtil.screenHeight}');
     print('设备的宽:${ScreenUtil.screenWidth}');
     return Material(
-      color: WMColors.primaryColor,
-      child: Padding(
+      color: WMColors.themePrimaryColor,
+      child: Container(
         padding: EdgeInsets.only(top: 150.0),
         child: Column(
           children: <Widget>[

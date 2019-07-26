@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'dart:async';
 
+import 'package:flutter_work/common/utils/public_utils.dart';
+
 /*
  * 封装 restful 请求
  * 
@@ -59,9 +61,11 @@ class HttpUtils {
 
       /// 打印响应相关信息
       print('响应数据：' + response.toString());
+      PublicUtils.toast('响应数据：' + response.toString());
     } on DioError catch (e) {
       /// 打印请求失败相关信息
       print('请求出错：' + e.toString());
+      PublicUtils.toast('请求出错：' + e.toString());
     } 
 
     return result;

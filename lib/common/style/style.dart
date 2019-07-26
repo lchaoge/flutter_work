@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 
 /// 颜色
 class WMColors {
-  static const Color primaryColor = Color(0xFF559EF7);
-  static const String primaryLightValueString = "#42464b";
-  static const String primaryDarkValueString = "#121917";
-  static const String miWhiteString = "#ececec";
-  static const String actionBlueString = "#267aff";
-  static const String webDraculaBackgroundColorString = "#282a36";
+  static const Color themePrimaryColor = Color(0xFF559EF7);
+  static const Color themeBackground = Color(0xFFF8F8F8);
+  static const Color themeBlackColor = Color(0xFF000000);
+  static const Color themeWhiteColor = Color(0xFFffffff);
+  static const Color themeDefaultColor = Color(0xFF666666);
+  static const Color themeWarningColor = Color(0xFFF4B34A);
+  static const Color themeInfoColor = Color(0xFF0089C7);
+  static const Color themeSuccessColor = Color(0xFF67C23A);
+  static const Color themeDangerColor = Color(0xFFF87356);
+  static const Color themeBorderColor = Color(0xFFd7d7d7);
+  static const Color themeRedColor = Color(0xFFFF4240);
 
 }
 

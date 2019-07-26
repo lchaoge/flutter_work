@@ -36,6 +36,8 @@ dependencies:
   jpush_flutter: ^0.0.12  # 极光推送
   shimmer: ^1.0.0  # 微光效果控件
   flutter_slidable: ^0.5.3  # item侧滑控件
+  device_info: ^0.2.0 # 设备信息
+  wifi: ^0.1.5 # wifi信息
 
 dev_dependencies:
   flutter_test:

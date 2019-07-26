@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
+import 'package:flutter_work/common/config/config.dart';
 import 'package:flutter_work/common/style/style.dart';
 import 'package:flutter_work/router/router_constant.dart';
 import 'package:flutter_work/router/routes.dart';
@@ -23,18 +24,19 @@ void main(){
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Provide.value<DeviceProvide>(context).setDevice();
     final router = Router();
     Routes.configureRoutes(router);
     NavigatorUtil.router = router;
 
     return Container(
       child: MaterialApp(
-        title: '京东商城',
+        title: '移动物美',
         onGenerateRoute: NavigatorUtil.router.generator,
-        debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: Config.DEBUG,
         theme: ThemeData(
-          platform: TargetPlatform.iOS, // 滑动返回
-          primaryColor: WMColors.primaryColor,
+          // platform: TargetPlatform.iOS, // 滑动返回
+          primaryColor: WMColors.themePrimaryColor,
         ),
         initialRoute: RouterConstant.root,
         // home: SplashPage(),

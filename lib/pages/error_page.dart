@@ -50,7 +50,7 @@ class ErrorPage extends StatelessWidget {
           print('重新加载试试');
         },
         textColor: Colors.white,
-        color: WMColors.primaryColor,
+        color: WMColors.themePrimaryColor,
       ),
     );
   }

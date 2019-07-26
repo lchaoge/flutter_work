@@ -5,7 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 /**
  * 通用组件
  */
-class Utils {
+class PublicUtils {
   static toast(String msg,){
     Fluttertoast.showToast(
       msg: msg,

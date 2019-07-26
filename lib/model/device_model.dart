@@ -4,16 +4,16 @@
  * on 2019/7/25.
  */
 class DeviceModel {
-  String mobile;
-  String appVerNo;
-  String deviceType;
-  String retailerNo;
-  String smsCode;
-  String deviceBrand;
-  String appVerCode;
-  String appVerTime;
-  String ip;
-  String deviceNo;
+  String mobile; /// 手机号
+  String appVerNo; /// 发版编号
+  String deviceType; /// 设备类型 1=IOS，2=Andriod
+  String retailerNo; /// 供商
+  String smsCode; /// 验证码
+  String deviceBrand; /// 设备品牌
+  String appVerCode; /// app版本
+  String appVerTime; /// 发版时间
+  String ip; /// Ip
+  String deviceNo; /// 设备编号
 
   DeviceModel(
       {this.mobile,
