@@ -91,7 +91,7 @@ class CgTree {
   int userId;
   String permRoleName;
   int permRoleId;
-  Null permNodeId;
+  int permNodeId;
   int permType;
 
   CgTree(

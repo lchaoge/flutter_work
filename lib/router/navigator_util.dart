@@ -15,7 +15,7 @@ class NavigatorUtil {
         return FadeTransition(
           opacity: animation,
           child: SlideTransition(position: Tween<Offset>(
-            begin: Offset(-1.0, -1.0),
+            begin: Offset(0.0, 0.0),
             end: Offset(1.0, 1.0),
           ).animate(animation),child: child,
           ),
@@ -33,4 +33,15 @@ class NavigatorUtil {
   static void goLoginPage(BuildContext context,bool replace){
     NavigatorUtil.basePage(context,RouterConstant.loginPage,replace);
   }
+
+  /// 跳转到我的二维码
+  static void goMemberQRCodePage(BuildContext context,bool replace){
+    NavigatorUtil.basePage(context,RouterConstant.memberQRCodePage,replace);
+  }
+
+  /// 跳转到我的二维码
+  static void goMemberSharePage(BuildContext context,bool replace){
+    NavigatorUtil.basePage(context,RouterConstant.memberSharePage,replace);
+  }
+
 }

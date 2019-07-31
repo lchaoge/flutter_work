@@ -12,6 +12,7 @@ import 'package:flutter_work/router/navigator_util.dart';
 import 'package:provide/provide.dart';
 import 'package:flutter_work/provide/device_provide.dart';
 import 'package:flutter_work/provide/user_info_provide.dart';
+import 'package:common_utils/common_utils.dart';
 
 /**
  * 登录
@@ -39,61 +40,113 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   // final registerFormKey = GlobalKey<FormState>();
-
+  FocusNode focusNodeMobile = new FocusNode();
+  FocusNode focusNodeSmsCode = new FocusNode();
   String mobile, smsCode;
   bool autovalidate = false;
+  TimerUtil mTimerUtil;
+  int timerNum = 60;
+  bool isClickSmsCode = false;
 
-  void getSmsCode(){
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    if (mTimerUtil != null) mTimerUtil.cancel();
+    super.dispose();
+  }
+
+  void getSmsCode() async {
+    // 点击键盘上的 "下一步" 回调
+    focusNodeMobile.unfocus();
+    FocusScope.of(context).requestFocus(focusNodeSmsCode);
+
     DeviceModel deviceModel = Provide.value<DeviceProvide>(context).deviceModel;
-    UserInfoDao.getSmsCode(mobile, deviceModel).then((res){
-      if(res['code'] == '0000'){
-        if(res['data']!=null){
+    await UserInfoDao.getSmsCode(mobile, deviceModel).then((res) {
+      if (res['code'] == '0000') {
+        if (res['data'] != null) {
+          setTimerUtil();
           setState(() {
-            smsCode = res['data']['smsCode']; 
+            isClickSmsCode = true;
+            smsCode = res['data']['smsCode'];
           });
         }
-      }else{
+      } else {
         PublicUtils.toast(res['msg']);
       }
     });
   }
 
-  void login(){
-    Provide.value<DeviceProvide>(context).setMobileAndSmsCode(
-      mobile: mobile,
-      smsCode: smsCode
-    );
-    DeviceModel deviceModel = Provide.value<DeviceProvide>(context).deviceModel;
-    UserInfoDao.login(deviceModel).then((res){
-      var jsonString = json.decode(res.toString());
-      UserInfoModel userInfoModel = UserInfoModel.fromJson(jsonString);
-      if(userInfoModel.code == '0000'){
-        if(userInfoModel.data!=null){
-          Provide.value<UserInfoProvide>(context).setUserInfo(userInfoModel);
-          Provide.value<UserInfoProvide>(context).setLoginState(true);
-          NavigatorUtil.goIndexPage(context, true);
-        }else{
-          Provide.value<UserInfoProvide>(context).setLoginState(true);
-        }
-      }else{
-        PublicUtils.toast(userInfoModel.msg);
+  setTimerUtil() {
+    mTimerUtil = TimerUtil(mInterval: 1000);
+    mTimerUtil.setOnTimerTickCallback((int tick) {
+      setState(() {
+        timerNum = tick--;
+      });
+      if(timerNum == 0){
+        isClickSmsCode = false;
+        timerNum = 60;
+        mTimerUtil.cancel();
       }
-      
     });
   }
 
-  String _validateUsername(value) {
-    if (value.isEmpty) {
-      return '请输入手机号';
-    }
-    return null;
+  login() async {
+     // 点击键盘上的 "完成" 回调
+    // 关闭弹出的键盘
+    focusNodeSmsCode.unfocus();
+    // 如果没有关联focusnode 要关闭键盘可以用：  FocusScope.of(context).requestFocus(FocusNode());
+
+
+    Provide.value<DeviceProvide>(context)
+        .setMobileAndSmsCode(mobile: mobile, smsCode: smsCode);
+    DeviceModel deviceModel = Provide.value<DeviceProvide>(context).deviceModel;
+    await UserInfoDao.login(deviceModel).then((res) {
+      if(res!=null){
+        UserInfoModel userInfoModel = UserInfoModel.fromJson(res);
+        if (userInfoModel.code == '0000') {
+          if (userInfoModel.data != null) {
+            Provide.value<UserInfoProvide>(context).setUserInfo(userInfoModel);
+            Provide.value<UserInfoProvide>(context).setLoginState(true);
+            NavigatorUtil.goIndexPage(context, true);
+          } else {
+            Provide.value<UserInfoProvide>(context).setLoginState(true);
+          }
+        } else {
+          PublicUtils.toast(userInfoModel.msg);
+        }
+      }
+    });
   }
 
-  String _validatePassword(value) {
+  _validateUsername(String value) {
     if (value.isEmpty) {
-      return '请输入验证码';
+      PublicUtils.toast('请输入手机号');
+      return false;
     }
-    return null;
+    if(value.length>=11){
+      if(!RegexUtil.isMobileExact(value)){
+        PublicUtils.toast('手机号格式错误');
+        return false;
+      }
+    }
+    
+    setState(() {
+      mobile = value;
+    });
+  }
+
+  _validateSmsCode(value) {
+    if (value.isEmpty) {
+      PublicUtils.toast('请输入验证码');
+      return false;
+    }
+    setState(() {
+      smsCode = value;
+    });
   }
 
   @override
@@ -142,18 +195,19 @@ class _LoginFormState extends State<LoginForm> {
             color: WMColors.themeBorderColor,
           ),
         ),
-        keyboardType: TextInputType.phone,
+        style: TextStyle(
+          fontSize: ScreenUtil().setSp(14.0),
+        ),
+        autofocus: true,
+        focusNode: focusNodeMobile,
+        keyboardType: TextInputType.number,
         autocorrect: true,
         textInputAction: TextInputAction.none,
-        onChanged:(String value){
-          setState(() {
-            mobile = value; 
-          });
-        },
-        onSubmitted: (String value) {
-          setState(() {
-            mobile = value; 
-          });
+        onChanged: _validateUsername,
+        onSubmitted: (_) {
+          // 点击键盘上的 "下一步" 回调
+          focusNodeMobile.unfocus();
+          FocusScope.of(context).requestFocus(focusNodeSmsCode);
         },
       ),
     );
@@ -181,7 +235,6 @@ class _LoginFormState extends State<LoginForm> {
       child: Container(
         height: ScreenUtil().setHeight(45),
         child: TextField(
-          obscureText: true,
           decoration: InputDecoration(
               border: OutlineInputBorder(gapPadding: 0.0),
               fillColor: WMColors.themeBackground,
@@ -195,9 +248,7 @@ class _LoginFormState extends State<LoginForm> {
                 color: WMColors.themeRedColor,
               )),
           keyboardType: TextInputType.number,
-          onSubmitted: (value) {
-            smsCode = value;
-          },
+          onChanged: _validateSmsCode,
         ),
       ),
     );
@@ -206,7 +257,7 @@ class _LoginFormState extends State<LoginForm> {
   /// 验证码按钮
   Widget _smsCodeButtonUI() {
     return Container(
-      width: ScreenUtil().setWidth(120.0),
+      width: ScreenUtil().setWidth(130.0),
       height: ScreenUtil().setHeight(45),
       margin: EdgeInsets.only(left: 10.0),
       decoration: BoxDecoration(
@@ -216,7 +267,7 @@ class _LoginFormState extends State<LoginForm> {
         elevation: 0.0,
         onPressed: getSmsCode,
         child: Text(
-          '获取验证码',
+          isClickSmsCode ? '$timerNum s后重新获取' : '获取验证码',
           style: TextStyle(
             fontSize: ScreenUtil().setSp(14),
           ),

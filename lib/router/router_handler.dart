@@ -3,7 +3,10 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter_work/pages/error_page.dart';
 import 'package:flutter_work/pages/index_page.dart';
 import 'package:flutter_work/pages/login_page.dart';
+import 'package:flutter_work/pages/member_qr_code_page.dart';
+import 'package:flutter_work/pages/member_share_page.dart';
 import 'package:flutter_work/pages/splash_page.dart';
+
 
 
 Handler errorPageHandler = Handler(
@@ -31,5 +34,20 @@ Handler loginPageHandler = Handler(
     // String goodsId = params['id'].first;
     // print('index>details goodsId is $goodsId');
     return LoginPage();
+  }
+);
+
+Handler memberQRCodePageHandler = Handler(
+  handlerFunc: (BuildContext context,Map<String,List<String>> params){
+    // String goodsId = params['id'].first;
+    // print('index>details goodsId is $goodsId');
+    return MemberQRCodePage();
+  }
+);
+Handler memberSharePageHandler = Handler(
+  handlerFunc: (BuildContext context,Map<String,List<String>> params){
+    // String goodsId = params['id'].first;
+    // print('index>details goodsId is $goodsId');
+    return MemberSharePage();
   }
 );

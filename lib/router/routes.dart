@@ -14,5 +14,10 @@ class Routes {
     router.define(RouterConstant.indexPage, handler: indexPageHandler);
     // 登录
     router.define(RouterConstant.loginPage, handler: loginPageHandler);
+    // 我的二维码
+    router.define(RouterConstant.memberQRCodePage, handler: memberQRCodePageHandler);
+    // 分享二维码
+    router.define(RouterConstant.memberSharePage, handler: memberSharePageHandler);
+    
   }
 }

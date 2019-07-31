@@ -11,13 +11,14 @@ class UserInfoProvide with ChangeNotifier{
   bool isLogin = false;
 
   /// 设置用户信息
-  setUserInfo(UserInfoModel userInfoModel) {
-    userInfoModel = userInfoModel;
+  setUserInfo(UserInfoModel userInfo) {
+    userInfoModel = userInfo;
     notifyListeners();
   }
 
   /// 设置登录状态
-  setLoginState(bool isLogin){
-    isLogin = isLogin;
+  setLoginState(bool login){
+    isLogin = login;
+    notifyListeners();
   }
 }
