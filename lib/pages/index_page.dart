@@ -12,8 +12,6 @@ import 'package:provide/provide.dart';
 
 class IndexPage extends StatelessWidget {
 
-  var currentPage;
-
   final List<BottomNavigationBarItem> bottomTabs = [
     BottomNavigationBarItem(
       icon: Icon(WMIcons.WORK),
