@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_work/common/dao/member_dao.dart';
+import 'package:flutter_work/dao/member_dao.dart';
 import 'package:flutter_work/model/member_model.dart';
 import 'package:flutter_work/widget/member_cell_widget.dart';
 import 'package:flutter_work/widget/member_userinfo_widget.dart';

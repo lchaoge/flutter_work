@@ -1,9 +1,10 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_work/common/dao/user_info_dao.dart';
+import 'package:flutter_work/dao/user_info_dao.dart';
 import 'package:flutter_work/common/style/style.dart';
 import 'package:flutter_work/common/utils/public_utils.dart';
 import 'package:flutter_work/model/device_model.dart';
@@ -43,9 +44,9 @@ class _LoginFormState extends State<LoginForm> {
   FocusNode focusNodeMobile = new FocusNode();
   FocusNode focusNodeSmsCode = new FocusNode();
   String mobile, smsCode;
-  bool autovalidate = false;
-  TimerUtil mTimerUtil;
-  int timerNum = 60;
+  Timer _countdownTimer;
+  String _codeCountdownStr = '获取验证码';
+  int _countdownNum = 59;
   bool isClickSmsCode = false;
 
   @override
@@ -53,24 +54,17 @@ class _LoginFormState extends State<LoginForm> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    if (mTimerUtil != null) mTimerUtil.cancel();
-    super.dispose();
-  }
-
   void getSmsCode() async {
-    // 点击键盘上的 "下一步" 回调
-    focusNodeMobile.unfocus();
-    FocusScope.of(context).requestFocus(focusNodeSmsCode);
+    if(isClickSmsCode){
+      return;
+    }
 
     DeviceModel deviceModel = Provide.value<DeviceProvide>(context).deviceModel;
     await UserInfoDao.getSmsCode(mobile, deviceModel).then((res) {
       if (res['code'] == '0000') {
+        reGetCountdown();
         if (res['data'] != null) {
-          setTimerUtil();
           setState(() {
-            isClickSmsCode = true;
             smsCode = res['data']['smsCode'];
           });
         }
@@ -80,18 +74,41 @@ class _LoginFormState extends State<LoginForm> {
     });
   }
 
-  setTimerUtil() {
-    mTimerUtil = TimerUtil(mInterval: 1000);
-    mTimerUtil.setOnTimerTickCallback((int tick) {
-      setState(() {
-        timerNum = tick--;
-      });
-      if(timerNum == 0){
-        isClickSmsCode = false;
-        timerNum = 60;
-        mTimerUtil.cancel();
+  void reGetCountdown() {
+    // 点击键盘上的 "下一步" 回调
+    focusNodeMobile.unfocus();
+    FocusScope.of(context).requestFocus(focusNodeSmsCode);
+    
+    setState(() {
+      isClickSmsCode = true;
+      if (_countdownTimer != null) {
+          return;
       }
+      // Timer的第一秒倒计时是有一点延迟的，为了立刻显示效果可以添加下一行。
+      _codeCountdownStr = '${_countdownNum--}重新获取';
+      _countdownTimer =
+          new Timer.periodic(new Duration(seconds: 1), (timer) {
+        setState(() {
+          if (_countdownNum > 0) {
+            _codeCountdownStr = '${_countdownNum--}重新获取';
+          } else {
+            _codeCountdownStr = '获取验证码';
+            _countdownNum = 59;
+            _countdownTimer.cancel();
+            _countdownTimer = null;
+            isClickSmsCode = false;
+          }
+        });
+      });
     });
+  }
+
+ // 不要忘记在这里释放掉Timer
+ @override
+  void dispose() {
+    _countdownTimer?.cancel();
+    _countdownTimer = null;
+    super.dispose();
   }
 
   login() async {
@@ -265,9 +282,9 @@ class _LoginFormState extends State<LoginForm> {
       ),
       child: RaisedButton(
         elevation: 0.0,
-        onPressed: getSmsCode,
+        onPressed: isClickSmsCode?null:getSmsCode,
         child: Text(
-          isClickSmsCode ? '$timerNum s后重新获取' : '获取验证码',
+          _codeCountdownStr,
           style: TextStyle(
             fontSize: ScreenUtil().setSp(14),
           ),

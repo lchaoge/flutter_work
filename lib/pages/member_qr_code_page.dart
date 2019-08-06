@@ -4,6 +4,7 @@ import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_work/common/style/style.dart';
+import 'package:flutter_work/common/utils/public_utils.dart';
 import 'package:flutter_work/model/member_model.dart';
 import 'package:flutter_work/provide/member_provide.dart';
 import 'package:image_picker/image_picker.dart';
@@ -17,7 +18,7 @@ class MemberQRCodePage extends StatelessWidget {
         type == 'Camera' ? ImageSource.camera : ImageSource.gallery;
     File image = await ImagePicker.pickImage(source: source);
     Navigator.pop(context);
-    print(image);
+    PublicUtils.toast(image.toString());
   }
 
   /// 打开相册菜单
@@ -324,7 +325,7 @@ class MemberQRCodePage extends StatelessWidget {
         data: mobile,
         size: ScreenUtil().setWidth(200.0),
         onError: (ex) {
-          print("[QR] ERROR - $ex");
+          PublicUtils.toast("[QR] ERROR - $ex");
         },
       ),
     );

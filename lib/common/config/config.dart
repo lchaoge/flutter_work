@@ -1,6 +1,6 @@
 class Config {
   
-  static const DEBUG = true;
+  static const DEBUG = false;
 
   /// //////////////////////////////////////常量////////////////////////////////////// ///
   static const TOKEN_KEY = "token";

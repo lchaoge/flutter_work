@@ -66,6 +66,8 @@ flutter:
    - static/images/loading.gif
    - static/images/no_net.png
    - static/images/default_user.png
+   - static/images/lishi.png
+   - static/images/techreport.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

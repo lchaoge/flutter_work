@@ -49,7 +49,7 @@ class HttpUtils {
 
     /// 打印请求相关信息：请求地址、请求方式、请求参数
     print('请求地址：【' + method + '  ' + url + '】');
-    print('请求参数：' + data.toString());
+    // print('请求参数：' + data.toString());
 
     Dio dio = createInstance();
     var result;
@@ -60,7 +60,7 @@ class HttpUtils {
       result = response.data;
 
       /// 打印响应相关信息
-      print('响应数据：' + response.toString());
+      // print('响应数据：' + response.toString());
       // PublicUtils.toast('响应数据：' + response.toString());
     } on DioError catch (e) {
       /// 打印请求失败相关信息

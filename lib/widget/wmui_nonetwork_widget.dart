@@ -4,16 +4,18 @@ import 'package:flutter_work/common/style/style.dart';
 
 class WMuiNonetworkWidget extends StatelessWidget {
 
-  String image;
-  String text;
-  String buttonText;
-  VoidCallback callback;
-  WMuiNonetworkWidget(this.callback,{this.image,this.text,this.buttonText});
+  final String image;
+  final String text;
+  final String buttonText;
+  final VoidCallback callback;
+  WMuiNonetworkWidget(this.callback,{this.image = WMIcons.IMAGE_NO_NET,this.text,this.buttonText});
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           _imageUI(),
           _textUI(),
@@ -26,9 +28,10 @@ class WMuiNonetworkWidget extends StatelessWidget {
   // 图片
   Widget _imageUI(){
     return Container(
+      margin: EdgeInsets.only(top: 20.0),
       width: ScreenUtil().setWidth(125.0),
       height: ScreenUtil().setHeight(111.0),
-      child: Image.network(image!=null?image:WMIcons.IMAGE_NO_NET,fit:BoxFit.cover),
+      child: Image.asset(image,fit:BoxFit.cover),
     );
   }
 

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_work/common/style/style.dart';
+import 'package:flutter_work/common/utils/public_utils.dart';
 import 'package:flutter_work/model/member_model.dart';
 import 'package:flutter_work/provide/member_provide.dart';
 import 'package:flutter_work/router/navigator_util.dart';
@@ -18,7 +19,7 @@ class MemberUserinfoWidget extends StatelessWidget {
         type == 'Camera' ? ImageSource.camera : ImageSource.gallery;
     File image = await ImagePicker.pickImage(source: source);
     Navigator.pop(context);
-    print(image);
+    PublicUtils.toast(image.toString());
   }
 
   /// 打开相册菜单

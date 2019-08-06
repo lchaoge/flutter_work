@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_work/common/utils/public_utils.dart';
 import 'package:jpush_flutter/jpush_flutter.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
@@ -24,7 +25,7 @@ class _JPushPageState extends State<JPushPage> {
     try {
       jpush.addEventHandler(
         onReceiveNotification:(Map<String,dynamic> message) async{
-          print('>>>>>>>>>>>>>>>>>>>>>>>>>>>flutter接受到的推送:$message');
+          PublicUtils.toast('>>>>>>>>>>>>>>>>>>>>>>>>>>>flutter接受到的推送:$message');
           setState(() {
             debugLable = '接受到推送:$message'; 
           });

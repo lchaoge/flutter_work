@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_work/common/style/style.dart';
+import 'package:flutter_work/common/utils/public_utils.dart';
 
 class ErrorPage extends StatelessWidget {
   @override
@@ -47,7 +48,7 @@ class ErrorPage extends StatelessWidget {
       height: ScreenUtil().setHeight(36.0),
       child: RaisedButton(
         onPressed: (){
-          print('重新加载试试');
+          PublicUtils.toast('重新加载试试');
         },
         textColor: Colors.white,
         color: WMColors.themePrimaryColor,

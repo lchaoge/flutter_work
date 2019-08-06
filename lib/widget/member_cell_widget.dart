@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_work/common/utils/public_utils.dart';
 import 'package:flutter_work/provide/device_provide.dart';
 import 'package:flutter_work/router/navigator_util.dart';
 import 'package:provide/provide.dart';
@@ -14,7 +15,7 @@ class MemberCellWidget extends StatelessWidget {
           child: Column(
             children: <Widget>[
               _listTileUI(true, () {
-                print('审批中心账号解绑');
+                PublicUtils.toast('审批中心账号解绑');
               },
                   icon: Icons.https,
                   color: Color.fromRGBO(255, 137, 137, 1.0),
@@ -26,7 +27,7 @@ class MemberCellWidget extends StatelessWidget {
                   color: Color.fromRGBO(255, 163, 0, 1.0),
                   title: '分享App'),
               _listTileUI(false, () {
-                print('当前版本号');
+                PublicUtils.toast('当前版本号');
               },
                   icon: Icons.edit_location,
                   color: Color.fromRGBO(74, 144, 226, 1.0),
@@ -37,7 +38,7 @@ class MemberCellWidget extends StatelessWidget {
                 height: ScreenUtil().setHeight(10.0),
               ),
               _listTileUI(false, () {
-                print('退出登陆');
+                PublicUtils.toast('退出登陆');
               },
                   icon: Icons.signal_wifi_off,
                   color: Color.fromRGBO(244, 93, 93, 1.0),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_work/common/utils/public_utils.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 /// 分享二维码
@@ -81,7 +82,7 @@ class MemberSharePage extends StatelessWidget {
         data: '13260094140',
         size: ScreenUtil().setWidth(250.0),
         onError: (ex) {
-          print("[QR] ERROR - $ex");
+          PublicUtils.toast("[QR] ERROR - $ex");
         },
       ),
     );
