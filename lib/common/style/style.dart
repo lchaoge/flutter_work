@@ -27,24 +27,27 @@ class WMIcons {
   static const String IMAGE_URL = 'http://upyun-img.wumart.com';
 
   static const String IMAGE_LOGO = IMAGE_URL+'/wmhelper/common/img/logo.png';
-  static const String IMAGE_LOGO2 = IMAGE_URL+'/wmhelper/common/img/logo.png';
+  static const String IMAGE_LOGO2 = IMAGE_URL+'/wmhelper/common/img/logo2.png';
   static const String IMAGE_LOADING = 'static/images/loading.gif';
   static const String IMAGE_NO_NET = 'static/images/no_net.png';
+  static const String IMAGE_NO_DATA = 'static/images/no_data.png';
   static const String IMAGE_DEFAULT_USER = 'static/images/default_user.png';
   static const String IMAGE_LISHI = 'static/images/lishi.png';
   static const String IMAGE_TECHREPORT = 'static/images/techreport.png';
 
-  static const IconData WORK = const IconData(0xe636, fontFamily: WMIcons.FONT_FAMILY); // 工作台
-  static const IconData WORK_SELECTED = const IconData(0xe637, fontFamily: WMIcons.FONT_FAMILY); // 工作台
-  static const IconData PROXY = const IconData(0xe639, fontFamily: WMIcons.FONT_FAMILY); // 待办
-  static const IconData PROXY_SELECTED = const IconData(0xe63a, fontFamily: WMIcons.FONT_FAMILY); // 待办
-  static const IconData MAILLIST = const IconData(0xe63c, fontFamily: WMIcons.FONT_FAMILY); // 通讯录
-  static const IconData MAILLIST_SELECTED = const IconData(0xe63d, fontFamily: WMIcons.FONT_FAMILY); // 通讯录
-  static const IconData USER = const IconData(0xe619, fontFamily: WMIcons.FONT_FAMILY); // 我的
-  static const IconData USER_SELECTED = const IconData(0xe63f, fontFamily: WMIcons.FONT_FAMILY); // 我的
+  static const String IMAGE_HOME_WORK = 'static/images/home_work.png'; // 工作台
+  static const String IMAGE_HOME_WORK_SELECTED = 'static/images/home_work_selected.png'; // 工作台
+  static const String IMAGE_HOME_PROXY = 'static/images/home_proxy.png'; // 待办
+  static const String IMAGE_HOME_PROXY_SELECTED = 'static/images/home_proxy_selected.png'; // 待办
+  static const String IMAGE_HOME_MAILLIST = 'static/images/home_mail_list.png'; // 通讯录
+  static const String IMAGE_HOME_MAILLIST_SELECTED = 'static/images/home_mail_list_selected.png'; // 通讯录
+  static const String IMAGE_HOME_USER = 'static/images/home_user.png'; // 我的
+  static const String IMAGE_HOME_USER_SELECTED = 'static/images/home_user_selected.png'; // 我的
 
-  static const IconData SCAN = const IconData(0xe624, fontFamily: WMIcons.FONT_FAMILY); // 扫一扫
-  static const IconData NEWS = const IconData(0xe60d, fontFamily: WMIcons.FONT_FAMILY); // 消息
+  static const IconData ICON_HOME_SCAN = const IconData(0xe624, fontFamily: WMIcons.FONT_FAMILY); // 扫一扫
+  static const IconData ICON_HOME_NEWS = const IconData(0xe60d, fontFamily: WMIcons.FONT_FAMILY); // 消息
+  static const IconData ICON_HOME_MAILLIST = const IconData(0xe62d, fontFamily: WMIcons.FONT_FAMILY); // 通讯录
+
 
   //待办
   static const IconData STATISTICS = const IconData(0xe646, fontFamily: WMIcons.FONT_FAMILY); // 统计

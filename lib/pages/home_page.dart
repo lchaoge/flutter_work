@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/bezier_circle_header.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_work/common/style/style.dart';
 import 'package:flutter_work/provide/home_provide.dart';
 import 'package:flutter_work/viewModel/home_view_model.dart';
@@ -11,6 +9,9 @@ import 'package:flutter_work/widget/home_swiper_widget.dart';
 import 'package:flutter_work/widget/wmui_loading_widget.dart';
 import 'package:flutter_work/widget/wmui_nonetwork_widget.dart';
 import 'package:provide/provide.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:flutter_easyrefresh/bezier_circle_header.dart';
+import 'package:flutter_easyrefresh/bezier_bounce_footer.dart';
 
 /**
  * 工作台
@@ -37,23 +38,25 @@ class HomePage extends StatelessWidget {
                 );
               } else {
                 return Container(
-                    child: EasyRefresh(
-                  onRefresh: () async {
-                    await HomeViewModel.getHomeData(context);
-                  },
-                  refreshHeader: BezierCircleHeader(
-                    key: _headerkey,
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    backgroundColor: WMColors.themePrimaryColor,
-                  ),
-                  child: ListView(
-                    children: <Widget>[
-                      HomeReportWidget(),
-                      HomeSwiperWidget(),
-                      HomeMenuWidget(),
-                    ],
-                  ),
-                ));
+                  child: EasyRefresh(
+                    firstRefresh:true,
+                    onRefresh: () async {
+                      await HomeViewModel.getHomeData(context);
+                    },
+                    refreshHeader: BezierCircleHeader(
+                      key: _headerkey,
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      backgroundColor: WMColors.themePrimaryColor,
+                    ),
+                    child: ListView(
+                      children: <Widget>[
+                        HomeReportWidget(),
+                        HomeSwiperWidget(),
+                        HomeMenuWidget(),
+                      ],
+                    ),
+                  )
+                );
               }
             } else {
               return WMuiLoadingWidget(

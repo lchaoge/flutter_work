@@ -9,7 +9,7 @@ import 'package:flutter_work/provide/user_info_provide.dart';
 
 class HomeDao {
   /// 获取首页菜单
-  static Future getHomeMenu(BuildContext context){
+  static Future selectHomeMenu(BuildContext context){
     UserInfo userInfo = Provide.value<UserInfoProvide>(context).userInfoModel.data.userInfo;
     DeviceModel deviceModel = Provide.value<DeviceProvide>(context).deviceModel;
     Map params = {
@@ -29,7 +29,7 @@ class HomeDao {
   }
 
   /// 获取首页banner
-  static Future getBanner(BuildContext context){
+  static Future selectBanner(BuildContext context){
     UserInfo userInfo = Provide.value<UserInfoProvide>(context).userInfoModel.data.userInfo;
     DeviceModel deviceModel = Provide.value<DeviceProvide>(context).deviceModel;
     Map params = {

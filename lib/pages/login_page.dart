@@ -60,16 +60,18 @@ class _LoginFormState extends State<LoginForm> {
     }
 
     DeviceModel deviceModel = Provide.value<DeviceProvide>(context).deviceModel;
-    await UserInfoDao.getSmsCode(mobile, deviceModel).then((res) {
-      if (res['code'] == '0000') {
-        reGetCountdown();
-        if (res['data'] != null) {
-          setState(() {
-            smsCode = res['data']['smsCode'];
-          });
+    await UserInfoDao.selectSmsCode(mobile, deviceModel).then((res) {
+      if(res!=null){
+        if (res['code'] == '0000') {
+          reGetCountdown();
+          if (res['data'] != null) {
+            setState(() {
+              smsCode = res['data']['smsCode'];
+            });
+          }
+        } else {
+          PublicUtils.toast(res['msg']);
         }
-      } else {
-        PublicUtils.toast(res['msg']);
       }
     });
   }

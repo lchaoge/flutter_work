@@ -52,7 +52,7 @@ class MemberData {
   String subGroup;
   String rankCode;
   String rankName;
-  String status;
+  int status;
 
   MemberData(
       {this.retailerNo,

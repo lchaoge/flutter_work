@@ -65,9 +65,19 @@ flutter:
    - static/images/logo2.png
    - static/images/loading.gif
    - static/images/no_net.png
+   - static/images/no_data.png
    - static/images/default_user.png
    - static/images/lishi.png
    - static/images/techreport.png
+
+   - static/images/home_work.png
+   - static/images/home_work_selected.png
+   - static/images/home_proxy.png
+   - static/images/home_proxy_selected.png
+   - static/images/home_mail_list.png
+   - static/images/home_mail_list_selected.png
+   - static/images/home_user.png
+   - static/images/home_user_selected.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

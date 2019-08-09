@@ -12,6 +12,7 @@ import 'package:provide/provide.dart';
 import 'package:flutter_work/provide/index_provide.dart';
 import 'package:flutter_work/provide/device_provide.dart';
 import 'package:flutter_work/provide/user_info_provide.dart';
+import 'package:flutter_work/provide/proxy_provide.dart';
 
 void main(){
   var providers = Providers();
@@ -21,7 +22,8 @@ void main(){
   ..provide(Provider<UserInfoProvide>.value(UserInfoProvide()))
   ..provide(Provider<MailListProvide>.value(MailListProvide()))
   ..provide(Provider<MemberProvide>.value(MemberProvide()))
-  ..provide(Provider<HomeProvide>.value(HomeProvide()));
+  ..provide(Provider<HomeProvide>.value(HomeProvide()))
+  ..provide(Provider<ProxyProvide>.value(ProxyProvide()));
 
   runApp(ProviderNode(child: MyApp(), providers: providers));
 }

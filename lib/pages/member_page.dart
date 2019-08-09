@@ -20,7 +20,7 @@ class MemberPage extends StatelessWidget {
       "userNo": Provide.value<UserInfoProvide>(context).userInfoModel.data.userInfo.userNo,
       "retailerNo": Provide.value<DeviceProvide>(context).deviceModel.retailerNo,
     };
-    await MemberDao.getAddrDetail(params).then((res){
+    await MemberDao.selectAddrDetail(params).then((res){
       if(res!=null){
         MemberModel memberModel = MemberModel.fromJson(res);
         if(memberModel.code == '0000'){

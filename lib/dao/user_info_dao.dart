@@ -7,7 +7,7 @@ import 'package:flutter_work/model/device_model.dart';
 class UserInfoDao {
 
   /// 获取验证码
-  static Future getSmsCode(String mobile, DeviceModel deviceModel) {
+  static Future selectSmsCode(String mobile, DeviceModel deviceModel) {
     Map params = {
       "mobile": mobile,
       "appVerNo": deviceModel.appVerNo,

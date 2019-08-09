@@ -22,23 +22,23 @@ class _IndexPageState extends State<IndexPage> with AutomaticKeepAliveClientMixi
 
   final List<BottomNavigationBarItem> bottomTabs = [
     BottomNavigationBarItem(
-      icon: Icon(WMIcons.WORK),
-      activeIcon: Icon(WMIcons.WORK_SELECTED),
+      icon: Image.asset(WMIcons.IMAGE_HOME_WORK,width: ScreenUtil().setWidth(28.0),height: ScreenUtil().setHeight(28.0),),
+      activeIcon: Image.asset(WMIcons.IMAGE_HOME_WORK_SELECTED,width: ScreenUtil().setWidth(28.0),height: ScreenUtil().setHeight(28.0),),
       title: Text('工作台')
     ),
     BottomNavigationBarItem(
-      icon: Icon(WMIcons.PROXY),
-      activeIcon: Icon(WMIcons.PROXY_SELECTED),
+      icon: Image.asset(WMIcons.IMAGE_HOME_PROXY,width: ScreenUtil().setWidth(28.0),height: ScreenUtil().setHeight(28.0),),
+      activeIcon: Image.asset(WMIcons.IMAGE_HOME_PROXY_SELECTED,width: ScreenUtil().setWidth(28.0),height: ScreenUtil().setHeight(28.0),),
       title: Text('待办')
     ),
     BottomNavigationBarItem(
-      icon: Icon(WMIcons.MAILLIST),
-      activeIcon: Icon(WMIcons.MAILLIST_SELECTED),
+      icon: Image.asset(WMIcons.IMAGE_HOME_MAILLIST,width: ScreenUtil().setWidth(28.0),height: ScreenUtil().setHeight(28.0),),
+      activeIcon: Image.asset(WMIcons.IMAGE_HOME_MAILLIST_SELECTED,width: ScreenUtil().setWidth(28.0),height: ScreenUtil().setHeight(28.0),),
       title: Text('通讯录')
     ),
     BottomNavigationBarItem(
-      icon: Icon(WMIcons.USER),
-      activeIcon: Icon(WMIcons.USER_SELECTED),
+      icon: Image.asset(WMIcons.IMAGE_HOME_USER,width: ScreenUtil().setWidth(28.0),height: ScreenUtil().setHeight(28.0),),
+      activeIcon: Image.asset(WMIcons.IMAGE_HOME_USER_SELECTED,width: ScreenUtil().setWidth(28.0),height: ScreenUtil().setHeight(28.0),),
       title: Text('我的')
     ),
   ];
