@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_work/common/utils/public_utils.dart';
 import 'package:flutter_work/model/home_menu_model.dart';
 import 'package:flutter_work/provide/home_provide.dart';
+import 'package:flutter_work/router/navigator_util.dart';
 import 'package:provide/provide.dart';
 
 class HomeMenuWidget extends StatelessWidget {
@@ -13,22 +14,23 @@ class HomeMenuWidget extends StatelessWidget {
       builder: (context, child, data) {
         MenuInfo menuInfo = data.homeMenuModel.data.menuInfo;
         return Column(
-          children: _containerUI(menuInfo.cid),
+          children: _containerUI(context, menuInfo.cid),
         );
       },
     ));
   }
 
-  List<Widget> _containerUI(List<Cid> cidList) {
+  List<Widget> _containerUI(BuildContext context, List<Cid> cidList) {
     List<Widget> result = [];
     cidList.map((item) {
       if (!ObjectUtil.isEmptyString(item.menuName) &&
           !ObjectUtil.isEmptyList(item.cid)) {
         result.add(Container(
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               _titleUI(item.menuName),
-              _groupMenuUI(item.cid),
+              _groupMenuUI(context, item.cid),
             ],
           ),
         ));
@@ -52,26 +54,29 @@ class HomeMenuWidget extends StatelessWidget {
     );
   }
 
-  Widget _groupMenuUI(List<Cid> cldList) {
+  Widget _groupMenuUI(BuildContext context, List<Cid> cldList) {
     return Container(
-      padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 30.0),
+      padding: EdgeInsets.all(0.0),
       child: Wrap(
         spacing: 5,
         runSpacing: 5,
         direction: Axis.horizontal,
         alignment: WrapAlignment.start,
-        children: cldList.map((item) => _menuItemUI(item.menuIcon, item.menuName)).toList(),
+        children: cldList.map((item) => _menuItemUI(context, item)).toList(),
       ),
     );
   }
 
-  Widget _menuItemUI(String menuIcon, String menuName) {
+  Widget _menuItemUI(BuildContext context, Cid item) {
     return InkWell(
-      onTap: (){
-        PublicUtils.toast(menuName);
+      onTap: () {
+        if (item.isJumpWeb == 1) {
+          NavigatorUtil.goWebViewPage(context, true, item);
+        }
       },
       child: Container(
-        width: ScreenUtil().setWidth(82),
+        padding: EdgeInsets.symmetric(horizontal: 5.0),
+        width: ScreenUtil().setWidth(83),
         height: ScreenUtil().setHeight(64),
         alignment: Alignment.center,
         child: Column(
@@ -80,14 +85,16 @@ class HomeMenuWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Image.network(
-              menuIcon,
+              '${item.menuIcon}',
               width: ScreenUtil().setWidth(26.0),
               height: ScreenUtil().setHeight(26.0),
             ),
             Container(
               margin: EdgeInsets.only(top: 7.0),
               child: Text(
-                menuName,
+                '${item.menuName}',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   color: Color.fromRGBO(34, 34, 34, 1.0),
                   fontSize: ScreenUtil().setSp(12.0),

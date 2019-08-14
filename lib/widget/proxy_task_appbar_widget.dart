@@ -11,38 +11,38 @@ class ProxyTaskAppbarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 5.0),
-      decoration: BoxDecoration(
-        color: Colors.white
-      ),
-      child: Provide<ProxyProvide>(
-        builder: (context,child,data){
-          HomeProxyModel homeProxyModel = data.homeProxyModel;
-          List<Widget> tabBar = [];
-          if(homeProxyModel !=null && homeProxyModel.code == '0000'){
-            tabBar = <Widget>[
-              _tabBarItemUI('${homeProxyModel.data.todoCount}','未完成',false,(){
-                Provide.value<ProxyProvide>(context).setDistributerType(0);
-                ProxyViewModel.getCatelist(context);
-              },color: WMColors.themePrimaryColor),
-              _tabBarItemUI('${homeProxyModel.data.urgeCount}','升级',false,(){
-                Provide.value<ProxyProvide>(context).setDistributerType(2);
-                ProxyViewModel.getCatelist(context);
-              },color: WMColors.themeDangerColor),
-              _tabBarItemUI(WMIcons.IMAGE_TECHREPORT,'统计',true,(){
-                PublicUtils.toast('统计');
-              },),
-              _tabBarItemUI(WMIcons.IMAGE_LISHI,'历史',true,(){
-                PublicUtils.toast('历史');
-              },),
-            ];
-          }
-          return Row(
-            children: tabBar,
-          );
-        },
-      )
-    );
+        padding: EdgeInsets.only(top: 5.0),
+        decoration: BoxDecoration(
+          color: Colors.white
+        ),
+        child: Provide<ProxyProvide>(
+          builder: (context,child,data){
+            HomeProxyModel homeProxyModel = data.homeProxyModel;
+            List<Widget> tabBar = [];
+            if(homeProxyModel !=null && homeProxyModel.code == '0000'){
+              tabBar = <Widget>[
+                _tabBarItemUI('${homeProxyModel.data.todoCount}','未完成',false,(){
+                  Provide.value<ProxyProvide>(context).setDistributerType(0);
+                  ProxyViewModel.getCatelist(context);
+                },color: WMColors.themePrimaryColor),
+                _tabBarItemUI('${homeProxyModel.data.urgeCount}','升级',false,(){
+                  Provide.value<ProxyProvide>(context).setDistributerType(2);
+                  ProxyViewModel.getCatelist(context);
+                },color: WMColors.themeDangerColor),
+                _tabBarItemUI(WMIcons.IMAGE_TECHREPORT,'统计',true,(){
+                  PublicUtils.toast('统计');
+                },),
+                _tabBarItemUI(WMIcons.IMAGE_LISHI,'历史',true,(){
+                  PublicUtils.toast('历史');
+                },),
+              ];
+            }
+            return Row(
+              children: tabBar,
+            );
+          },
+        )
+      );
   }
 
   Widget _tabBarItemUI(String value, String title, bool isImage,VoidCallback onTap,

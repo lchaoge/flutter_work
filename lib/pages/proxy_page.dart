@@ -61,6 +61,7 @@ class _ProxyPageState extends State<ProxyPage>
 
   _appbar(BuildContext context) {
     return AppBar(
+      elevation: 0.5,
         backgroundColor: Colors.white,
         centerTitle: false,
         leading: Container(

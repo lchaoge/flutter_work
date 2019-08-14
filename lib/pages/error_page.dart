@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_work/common/style/style.dart';
-import 'package:flutter_work/common/utils/public_utils.dart';
+import 'package:flutter_work/router/navigator_util.dart';
 
 class ErrorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
-        body: Center(
+        body: Container(
+          alignment: Alignment.center,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               _errorImage(),
               _errorText(),
-              _errorButton(),
+              _errorButton(context),
             ],
           )),
       ),
@@ -24,7 +28,7 @@ class ErrorPage extends StatelessWidget {
     return Container(
       width: ScreenUtil().setWidth(125.0),
       height: ScreenUtil().setHeight(111.0),
-      child: Image.network(WMIcons.IMAGE_NO_NET,fit: BoxFit.cover,),
+      child: Image.asset(WMIcons.IMAGE_NO_NET,fit: BoxFit.cover,),
     );
   }
 
@@ -41,14 +45,15 @@ class ErrorPage extends StatelessWidget {
     );
   }
 
-  Widget _errorButton(){
+  Widget _errorButton(BuildContext context){
     return Container(
       margin: EdgeInsets.only(top: 22.0),
       width: ScreenUtil().setWidth(150.0),
       height: ScreenUtil().setHeight(36.0),
       child: RaisedButton(
+        child: Text('重新加载试试'),
         onPressed: (){
-          PublicUtils.toast('重新加载试试');
+          NavigatorUtil.goIndexPage(context, true);
         },
         textColor: Colors.white,
         color: WMColors.themePrimaryColor,

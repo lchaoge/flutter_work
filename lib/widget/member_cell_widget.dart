@@ -4,8 +4,15 @@ import 'package:flutter_work/common/utils/public_utils.dart';
 import 'package:flutter_work/provide/device_provide.dart';
 import 'package:flutter_work/router/navigator_util.dart';
 import 'package:provide/provide.dart';
+import 'package:flutter_work/provide/user_info_provide.dart';
 
 class MemberCellWidget extends StatelessWidget {
+
+
+  Future delLoginState(BuildContext context) async{
+    await Provide.value<UserInfoProvide>(context).delLoginState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Provide<DeviceProvide>(
@@ -38,7 +45,11 @@ class MemberCellWidget extends StatelessWidget {
                 height: ScreenUtil().setHeight(10.0),
               ),
               _listTileUI(false, () {
-                PublicUtils.toast('退出登陆');
+                
+                delLoginState(context).then((res){
+                  PublicUtils.toast('退出成功');
+                  NavigatorUtil.goLoginPage(context, true);
+                });
               },
                   icon: Icons.signal_wifi_off,
                   color: Color.fromRGBO(244, 93, 93, 1.0),

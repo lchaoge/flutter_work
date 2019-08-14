@@ -7,6 +7,8 @@ import 'package:flutter_work/pages/proxy_page.dart';
 import 'package:flutter_work/pages/member_page.dart';
 import 'package:flutter_work/common/style/style.dart';
 import 'package:flutter_work/provide/index_provide.dart';
+import 'package:flutter_work/viewModel/mail_list_view_model.dart';
+import 'package:flutter_work/viewModel/member_view_model.dart';
 import 'package:provide/provide.dart';
 
 class IndexPage extends StatefulWidget{
@@ -16,9 +18,17 @@ class IndexPage extends StatefulWidget{
 
 class _IndexPageState extends State<IndexPage> with AutomaticKeepAliveClientMixin{
   
+  int _lastClickTime;
   
   @override
   bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    MailListViewModel.getSearchAddrOrgList(context, '');
+    MemberViewModel.getAddrDetail(context);
+    super.initState();
+  }
 
   final List<BottomNavigationBarItem> bottomTabs = [
     BottomNavigationBarItem(
@@ -46,9 +56,23 @@ class _IndexPageState extends State<IndexPage> with AutomaticKeepAliveClientMixi
   final List tabBodies = [
     HomePage(),
     ProxyPage(),
-    MailListPage(),
+    MailListPage(orgCode: '',),
     MemberPage()
   ];
+
+  /// 双击退出
+  Future<bool> _onWillPop() {
+    int nowTime = new DateTime.now().microsecondsSinceEpoch;
+    if (_lastClickTime != 0 && nowTime - _lastClickTime > 1500) {
+      return new Future.value(true);
+    } else {
+      _lastClickTime = new DateTime.now().microsecondsSinceEpoch;
+      new Future.delayed(const Duration(milliseconds: 1500), () {
+        _lastClickTime = 0;
+      });
+      return new Future.value(false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +80,8 @@ class _IndexPageState extends State<IndexPage> with AutomaticKeepAliveClientMixi
     return Provide<IndexProvide>(
       builder: (context,child,data){
         int currentIndex= Provide.value<IndexProvide>(context).navigationBarIndex;
-        return Container(
+        return WillPopScope(
+          onWillPop: _onWillPop,
           child: Scaffold(
             backgroundColor: Color.fromRGBO(244,245,245,1.0),
             bottomNavigationBar: BottomNavigationBar(

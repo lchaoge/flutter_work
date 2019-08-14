@@ -132,7 +132,7 @@ class _LoginFormState extends State<LoginForm> {
             Provide.value<UserInfoProvide>(context).setLoginState(true);
             NavigatorUtil.goIndexPage(context, true);
           } else {
-            Provide.value<UserInfoProvide>(context).setLoginState(true);
+            Provide.value<UserInfoProvide>(context).setLoginState(false);
           }
         } else {
           PublicUtils.toast(userInfoModel.msg);

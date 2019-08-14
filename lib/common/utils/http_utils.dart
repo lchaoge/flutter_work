@@ -62,7 +62,6 @@ class HttpUtils {
       dio.options.headers = headers;
       Response response = await dio.request(url, data: data, options: new Options(method: method),);
       if (response.statusCode == 200) {
-        print(response.data);
         if(response.data is Map){
           result = response.data;
         }else {

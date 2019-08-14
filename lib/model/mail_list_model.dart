@@ -64,8 +64,8 @@ class UserList {
   String userNo;
   String userName;
   String orgNamePath;
-  Null postName;
-  Null headImgUrl;
+  String postName;
+  String headImgUrl;
 
   UserList(
       {this.retailerNo,

@@ -6,7 +6,7 @@ class WMuiLoadingWidget extends StatelessWidget {
 
   final String title;
   final double fontSize;
-  WMuiLoadingWidget({this.title,this.fontSize});
+  WMuiLoadingWidget({this.title = '移动物美',this.fontSize = 40.0});
 
   @override
   Widget build(BuildContext context) {

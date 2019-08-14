@@ -7,34 +7,34 @@ import 'package:flutter_work/widget/mail_list_company_widget.dart';
 import 'package:flutter_work/widget/mail_list_people_widget.dart';
 
 class MailListPage extends StatelessWidget {
+  final String orgCode;
+  MailListPage({this.orgCode});
+
   @override
   Widget build(BuildContext context) {
-    MailListViewModel.getSearchAddrOrgList(context,'');
     return Container(
       child: Scaffold(
           appBar: AppBar(
             centerTitle: false,
             backgroundColor: Colors.white,
             elevation: 0.0,
-            title: Text('通讯录',style: TextStyle(
-              color: Color.fromRGBO(0, 0, 0, 1.0),
-              fontSize: ScreenUtil().setSp(20.0),
-              fontWeight: FontWeight.bold
-            ),),
+            title: Text(
+              '通讯录',
+              style: TextStyle(
+                  color: Color.fromRGBO(0, 0, 0, 1.0),
+                  fontSize: ScreenUtil().setSp(20.0),
+                  fontWeight: FontWeight.bold),
+            ),
           ),
           body: Container(
-            decoration: BoxDecoration(
-              color: Colors.white
-            ),
+            decoration: BoxDecoration(color: Colors.white),
             child: ListView(
               children: <Widget>[
                 MailListPeopleWidget(),
                 MailListCompanyWidget(),
               ],
             ),
-          )
-          
-        ),
+          )),
     );
   }
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_work/common/style/style.dart';
+import 'package:flutter_work/model/home_weather_model.dart';
 import 'package:flutter_work/provide/home_provide.dart';
+import 'package:flutter_work/router/navigator_util.dart';
 import 'package:flutter_work/viewModel/home_view_model.dart';
 import 'package:flutter_work/widget/home_menu_widget.dart';
 import 'package:flutter_work/widget/home_report_widget.dart';
@@ -11,20 +13,16 @@ import 'package:flutter_work/widget/wmui_nonetwork_widget.dart';
 import 'package:provide/provide.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_easyrefresh/bezier_circle_header.dart';
-import 'package:flutter_easyrefresh/bezier_bounce_footer.dart';
+import 'package:pk_skeleton/pk_skeleton.dart';
+import 'package:flutter_skeleton/flutter_skeleton.dart';
 
-/**
- * 工作台
- */
+/// 工作台
 class HomePage extends StatelessWidget {
-  final GlobalKey<RefreshHeaderState> _headerkey =
-      new GlobalKey<RefreshHeaderState>();
-
   @override
   Widget build(BuildContext context) {
     return Container(
         child: Scaffold(
-      appBar: _appbar(),
+      appBar: _appbar(context),
       body: Container(
         child: FutureBuilder(
           future: HomeViewModel.getHomeData(context),
@@ -38,30 +36,27 @@ class HomePage extends StatelessWidget {
                 );
               } else {
                 return Container(
-                  child: EasyRefresh(
-                    firstRefresh:true,
-                    onRefresh: () async {
-                      await HomeViewModel.getHomeData(context);
-                    },
-                    refreshHeader: BezierCircleHeader(
-                      key: _headerkey,
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                      backgroundColor: WMColors.themePrimaryColor,
-                    ),
-                    child: ListView(
-                      children: <Widget>[
-                        HomeReportWidget(),
-                        HomeSwiperWidget(),
-                        HomeMenuWidget(),
-                      ],
-                    ),
-                  )
-                );
+                    child: EasyRefresh(
+                  firstRefresh: true,
+                  onRefresh: () async {
+                    await HomeViewModel.getHomeData(context);
+                  },
+                  header: BezierCircleHeader(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    backgroundColor: WMColors.themePrimaryColor,
+                  ),
+                  child: ListView(
+                    children: <Widget>[
+                      HomeReportWidget(),
+                      HomeSwiperWidget(),
+                      HomeMenuWidget(),
+                    ],
+                  ),
+                ));
               }
             } else {
-              return WMuiLoadingWidget(
-                title: '移动物美',
-                fontSize: 40.0,
+              return PKCardPageSkeleton(
+                totalLines: 5,
               );
             }
           },
@@ -70,45 +65,30 @@ class HomePage extends StatelessWidget {
     ));
   }
 
-  Widget _appbar() {
+  Widget _appbar(BuildContext context) {
     return AppBar(
       elevation: 0.0,
       title: Provide<HomeProvide>(
-        builder: (context,child,data){
-          
-          String weatherInfo = data.homeMenuModel.data==null?'':data.homeMenuModel.data.weatherInfo;
+        builder: (context, child, data) {
+          String weatherInfo = data.homeMenuModel.data == null
+              ? ''
+              : data.homeMenuModel.data.weatherInfo;
           return Container(
-            child: Row(
-              children: <Widget>[
-                Text(
-                  weatherInfo,
-                  style: TextStyle(
-                    fontSize: ScreenUtil().setSp(12.0),
-                    fontWeight: FontWeight.w400,
-                    
-                  ),
+              child: Row(
+            children: <Widget>[
+              Text(
+                '$weatherInfo',
+                style: TextStyle(
+                  fontSize: ScreenUtil().setSp(12.0),
+                  fontWeight: FontWeight.w400,
                 ),
-                SizedBox(
-                  width: ScreenUtil().setWidth(15.0),
-                ),
-                Text(
-                  '晴 3/-4°',
-                  style: TextStyle(
-                    fontSize: ScreenUtil().setSp(12.0),
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                SizedBox(
-                  width: ScreenUtil().setWidth(4.0),
-                ),
-                Icon(
-                  Icons.wb_sunny,
-                  color: Color.fromRGBO(255, 220, 11, 1),
-                  size: ScreenUtil().setSp(12.0),
-                ),
-              ],
-            )
-          );
+              ),
+              SizedBox(
+                width: ScreenUtil().setWidth(15.0),
+              ),
+              _appbarWeather(context),
+            ],
+          ));
         },
       ),
       actions: <Widget>[
@@ -116,7 +96,9 @@ class HomePage extends StatelessWidget {
           padding: EdgeInsets.all(0.0),
           iconSize: ScreenUtil().setSp(18.0),
           icon: Icon(Icons.crop_free),
-          onPressed: () {},
+          onPressed: () {
+            NavigatorUtil.goScanPage(context, false);
+          },
         ),
         IconButton(
           padding: EdgeInsets.all(0.0),
@@ -125,6 +107,58 @@ class HomePage extends StatelessWidget {
           onPressed: () {},
         ),
       ],
+    );
+  }
+
+  Widget _appbarWeather(BuildContext context) {
+    return Provide<HomeProvide>(
+      builder: (context, child, data) {
+        HomeWeatherModel homeWeatherModel = data.homeWeatherModel;
+        if (homeWeatherModel.city != null) {
+          Widget _wea_img;
+          // xue, lei, shachen, wu, bingbao, yun, yu, yin, qing
+          if (homeWeatherModel.data[0].weaImg == 'yun') {
+            /// 云
+            _wea_img = Icon(
+              Icons.wb_cloudy,
+              color: Colors.white,
+              size: ScreenUtil().setSp(12.0),
+            );
+          } else if (homeWeatherModel.data[0].weaImg == 'qing') {
+            /// 晴
+            _wea_img = Icon(
+              Icons.wb_sunny,
+              color: Color.fromRGBO(255, 220, 11, 1),
+              size: ScreenUtil().setSp(12.0),
+            );
+          } else if (homeWeatherModel.data[0].weaImg == 'xue') {
+            /// 雪
+            _wea_img = Icon(
+              Icons.ac_unit,
+              color: Colors.white,
+              size: ScreenUtil().setSp(12.0),
+            );
+          }
+
+          return Row(
+            children: <Widget>[
+              Text(
+                '${homeWeatherModel.data[0].wea}  ${homeWeatherModel.data[0].tem1}-${homeWeatherModel.data[0].tem2}',
+                style: TextStyle(
+                  fontSize: ScreenUtil().setSp(12.0),
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              SizedBox(
+                width: ScreenUtil().setWidth(5.0),
+              ),
+              _wea_img
+            ],
+          );
+        } else {
+          return Text('');
+        }
+      },
     );
   }
 }

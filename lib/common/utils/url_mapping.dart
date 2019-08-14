@@ -17,6 +17,10 @@ class UrlMapping {
   static const String POST_COMM_V1_MAIN = mappURL + '/api/comm/v1/main';
   /// 首页-banner
   static const String POST_FRAME_V1_GETBANNERIMGLIST = mappURL + '/api/frame/v1/getBannerImgList';
+  /// 首页-业绩
+  static const String POST_FRAME_V1_GETMYRTSALE = mappURL + '/api/reports/v1/getMyRtSale';
+  /// 首页-天气
+  static const String POST_HOME_WEATHER = 'https://www.tianqiapi.com/api/?version=v1';
   /// 获取通讯录
   static const String POST_HRS_V1_SEARCHADDRORGLIST = mappURL + '/api/hrs/v1/searchAddrOrgList';
   /// 我的

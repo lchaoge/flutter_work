@@ -3,21 +3,24 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_work/common/style/style.dart';
 import 'package:flutter_work/model/mail_list_model.dart';
 import 'package:flutter_work/provide/mail_list_provide.dart';
+import 'package:flutter_work/router/navigator_util.dart';
 import 'package:provide/provide.dart';
 
 class MailListCompanyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Provide<MailListProvide>(
-      builder: (context,child,data){
-        if(data.mailListModel.code == '0000'){
+      builder: (context, child, data) {
+        if (data.mailListModel.code == '0000') {
           List<OrgList> orgList = data.mailListModel.data.orgList;
-          return ListView.builder(
-            shrinkWrap: true,
-            itemCount: orgList.length,
-            itemBuilder: (BuildContext context,int index){
-              return _inkwellUI(context,orgList[index]);
-            },
+          return Expanded(
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: orgList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return _inkwellUI(context, orgList[index]);
+              },
+            ),
           );
         }else{
           return Container();
@@ -26,9 +29,13 @@ class MailListCompanyWidget extends StatelessWidget {
     );
   }
 
-  Widget _inkwellUI(BuildContext context,OrgList orgList){
+  Widget _inkwellUI(BuildContext context, OrgList orgList) {
     return InkWell(
-      onTap: (){print('${orgList.orgName}');},
+      onTap: () {
+        print('${orgList.orgCode}');
+        Map params = {'orgCode': orgList.orgCode};
+        NavigatorUtil.goMailListPage(context, false, params);
+      },
       child: Container(
         height: ScreenUtil().setHeight(50.0),
         padding: EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 8.0),
@@ -40,14 +47,16 @@ class MailListCompanyWidget extends StatelessWidget {
         ))),
         child: Row(
           children: <Widget>[
-            Icon(WMIcons.ICON_HOME_MAILLIST,
+            Icon(Icons.store_mall_directory,
                 size: ScreenUtil().setSp(34.0),
                 color: WMColors.themePrimaryColor),
             Container(
               margin: EdgeInsets.only(left: 10.0),
               child: Text(
                 '${orgList.orgName}',
-                style: TextStyle(fontSize: ScreenUtil().setSp(14.0),),
+                style: TextStyle(
+                  fontSize: ScreenUtil().setSp(14.0),
+                ),
               ),
             )
           ],

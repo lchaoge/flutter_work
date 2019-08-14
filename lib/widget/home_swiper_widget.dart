@@ -3,6 +3,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_work/common/utils/public_utils.dart';
 import 'package:flutter_work/model/home_banner_model.dart';
+import 'package:flutter_work/pages/webview_page.dart';
 import 'package:provide/provide.dart';
 import 'package:flutter_work/provide/home_provide.dart';
 
@@ -22,7 +23,7 @@ class HomeSwiperWidget extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               return InkWell(
                   onTap: () {
-                    PublicUtils.toast(homeBannerData[index].newsUrl);
+                    WebviewPage(homeBannerData[index].newsUrl);
                   },
                   child: Image.network(
                     homeBannerData[index].imgUrl,

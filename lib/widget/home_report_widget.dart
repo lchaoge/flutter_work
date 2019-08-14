@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_work/model/home_report_model.dart';
+import 'package:flutter_work/provide/home_provide.dart';
+import 'package:provide/provide.dart';
 
 class HomeReportWidget extends StatelessWidget {
 
@@ -43,13 +46,20 @@ class HomeReportWidget extends StatelessWidget {
           topRight: Radius.circular(10.0),
         )
       ),
-      child: Column(
-        children: <Widget>[
-          _titleUI(),
-          _valueUI(),
-          _statisticsUI(),
-        ],
-      ),
+      child: Provide<HomeProvide>(
+        builder: (context,child,data){
+          if(data.homeReportModel.code == '0000'){
+            HomeReportData homeReportData = data.homeReportModel.data;
+            return Column(
+              children: <Widget>[
+                _titleUI(),
+                _valueUI(homeReportData),
+                _statisticsUI(homeReportData),
+              ],
+            );
+          }
+        },
+      )
     );
   }
 
@@ -65,59 +75,67 @@ class HomeReportWidget extends StatelessWidget {
             child: Text('日达成(%)',style: _titleStyle),
           ),
           Expanded(
-            child: Text('日可比(%)',style: _titleStyle),
+            child: Text('日可比(%)',style: _titleStyle,textAlign: TextAlign.end,),
           ),
         ],
       ),
     );
   }
 
-  Widget _valueUI(){
+  Widget _valueUI(HomeReportData homeReportData){
     return Container(
       margin: EdgeInsets.only(top: 4.0),
       child: Row(
         children: <Widget>[
           Expanded(
             flex: 2,
-            child: Text('88288879',style: _valueStyle),
+            child: Text('${homeReportData.saleamt}',style: _valueStyle),
           ),
           Expanded(
-            child: Text('78.53',style: _valueStyle),
+            child: Text('${homeReportData.saleamtRate}',style: _valueStyle),
           ),
           Expanded(
-            child: Text('-17.29',style: _valueStyle),
+            child: Text('${homeReportData.compasaleamtrate}',style: _valueStyle,textAlign: TextAlign.end,),
           ),
         ]
       ),
     );
   }
 
-  Widget _statisticsUI(){
+  Widget _statisticsUI(HomeReportData homeReportData){
     return Container(
       margin: EdgeInsets.only(top: 10.0),
       child: Row(
         children: <Widget>[
           Expanded(
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 Text('交易数',style: _statisticsTitleStyle,),
-                Text('144675',style: _statisticsValueStyle,),
+                SizedBox(width: 5.0,),
+                Text('${homeReportData.cnt}',style: _statisticsValueStyle,),
               ],
             ),
           ),
           Expanded(
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 Text('净毛(千元)',style: _statisticsTitleStyle,),
-                Text('1526',style: _statisticsValueStyle,),
+                SizedBox(width: 5.0,),
+                Text('${homeReportData.rofit}',style: _statisticsValueStyle,),
               ],
             ),
           ),
           Expanded(
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 Text('净毛利率',style: _statisticsTitleStyle,),
-                Text('1434.46',style: _statisticsValueStyle,),
+                SizedBox(width: 5.0,),
+                Text('${homeReportData.profitratio}',style: _statisticsValueStyle,),
               ],
             ),
           ),
