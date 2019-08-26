@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_work/common/config/config.dart';
 import 'dart:async';
 
 import 'package:flutter_work/common/utils/public_utils.dart';
@@ -17,7 +18,6 @@ import 'package:flutter_work/common/utils/public_utils.dart';
  *  - 统一打印报错信息；
  */
 class HttpUtils {
-
   /// global dio object
   static Dio dio;
 
@@ -34,15 +34,13 @@ class HttpUtils {
   static const String DELETE = 'delete';
 
   /// request method
-  static Future<Map> request (
-    String url, 
-    { data, method,Map<String, dynamic> headers }) async {
-
+  static Future<Map> request(String url,
+      {data, method, Map<String, dynamic> headers}) async {
     headers = headers ?? {};
     data = data ?? {};
     method = method ?? 'GET';
 
-    /// restful 请求处理   
+    /// restful 请求处理
     /// /gysw/search/hist/:user_id        user_id=27
     /// 最终生成 url 为     /gysw/search/hist/27
     data.forEach((key, value) {
@@ -52,29 +50,37 @@ class HttpUtils {
     });
 
     /// 打印请求相关信息：请求地址、请求方式、请求参数
-    print('请求地址：【' + method + '  ' + url + '】');
-    // print('请求参数：' + data.toString());
+    if (Config.DEBUG) {
+      print('请求地址：【' + method + '  ' + url + '】');
+      print('请求参数：' + data.toString());
+    }
 
     Dio dio = createInstance();
     Map result;
 
     try {
       dio.options.headers = headers;
-      Response response = await dio.request(url, data: data, options: new Options(method: method),);
+      Response response = await dio.request(
+        url,
+        data: data,
+        options: new Options(method: method),
+      );
       if (response.statusCode == 200) {
-        if(response.data is Map){
+        if (response.data is Map) {
           result = response.data;
-        }else {
+        } else {
           result = json.decode(response.data.toString());
         }
       }
+
       /// 打印响应相关信息
-      // print('响应数据：' + response.toString());
-      // PublicUtils.toast('响应数据：' + response.toString());
+      if (Config.DEBUG) {
+        print('响应数据：' + response.toString());
+      }
     } on DioError catch (e) {
       /// 打印请求失败相关信息
       formatError(e);
-    } 
+    }
 
     return result;
   }
@@ -83,7 +89,8 @@ class HttpUtils {
   downloadFile(urlPath, savePath) async {
     Response response;
     try {
-      response = await dio.download(urlPath, savePath,onReceiveProgress: (int count, int total){
+      response = await dio.download(urlPath, savePath,
+          onReceiveProgress: (int count, int total) {
         //进度
         print("$count $total");
       });
@@ -97,50 +104,53 @@ class HttpUtils {
 
   /// error统一处理
   static void formatError(DioError err) {
-    if (err!=null && err.response!=null) {
-    switch (err.response.statusCode) {
-      case 400:
-        PublicUtils.toast('错误请求[400]');
-        break;
-      case 401:
-        PublicUtils.toast('未授权，请重新登录[401]');
-        break;
-      case 403:
-        PublicUtils.toast('拒绝访问[403]');
-        break;
-      case 404:
-        PublicUtils.toast('未找到资源[404]');
-        break;
-      case 405:
-        PublicUtils.toast('请求方法未允许[405]');
-        break;
-      case 408:
-        PublicUtils.toast('请求超时[408]');
-        break;
-      case 500:
-        PublicUtils.toast('服务器出错[500]');
-        break;
-      case 501:
-        PublicUtils.toast('网络未实现[501]');
-        break;
-      case 502:
-        PublicUtils.toast('网络错误[502]');
-        break;
-      case 503:
-        PublicUtils.toast('服务不可用[503]');
-        break;
-      case 504:
-        PublicUtils.toast('网络超时[504]');
-        break;
-      case 505:
-        PublicUtils.toast('http版本不支持该请求[505]');
-        break;
-      default:
-        PublicUtils.toast('连接错误[9999]');
+    Map _result;
+    if (err != null && err.response != null) {
+      switch (err.response.statusCode) {
+        case 400:
+          _result = {"code": '400', "msg": '错误请求[400]'};
+          break;
+        case 401:
+          _result = {"code": '401', "msg": '未授权，请重新登录[401]'};
+          break;
+        case 403:
+          _result = {"code": '403', "msg": '拒绝访问[403]'};
+          break;
+        case 404:
+          _result = {"code": '404', "msg": '未找到资源[404]'};
+          break;
+        case 405:
+          _result = {"code": '405', "msg": '请求方法未允许[405]'};
+          break;
+        case 408:
+          _result = {"code": '408', "msg": '请求超时[408]'};
+          break;
+        case 500:
+          _result = {"code": '500', "msg": '服务器出错[500]'};
+          break;
+        case 501:
+          _result = {"code": '501', "msg": '网络未实现[501]'};
+          break;
+        case 502:
+          _result = {"code": '502', "msg": '网络错误[502]'};
+          break;
+        case 503:
+          _result = {"code": '503', "msg": '服务不可用[503]'};
+          break;
+        case 504:
+          _result = {"code": '504', "msg": '网络超时[504]'};
+          break;
+        case 505:
+          _result = {"code": '505', "msg": 'http版本不支持该请求[505]'};
+          break;
+        default:
+          _result = {"code": '9999', "msg": '连接错误[9999]'};
+      }
+    } else {
+      _result = {"code": '9999', "msg": '连接到服务器失败[9999]'};
     }
-  } else {
-    PublicUtils.toast('连接到服务器失败[9999]');
-  }
+    // PublicUtils.toast(_result['msg']);
+    throw FormatException(_result['msg']);
     // if (e.type == DioErrorType.CONNECT_TIMEOUT) {
     //   PublicUtils.toast('连接超时:' + e.message.toString());
     // } else if (e.type == DioErrorType.SEND_TIMEOUT) {
@@ -157,46 +167,51 @@ class HttpUtils {
   }
 
   /// 创建 dio 实例对象
-  static Dio createInstance () {
+  static Dio createInstance() {
     if (dio == null) {
       /// 全局属性：请求前缀、连接超时时间、响应超时时间
       BaseOptions options = new BaseOptions(
-        // baseUrl: API_PREFIX,
+        /// baseUrl: API_PREFIX,
         connectTimeout: CONNECT_TIMEOUT,
         receiveTimeout: RECEIVE_TIMEOUT,
-        //请求的Content-Type，默认值是[ContentType.json]. 也可以用ContentType.parse("application/x-www-form-urlencoded")
+
+        /// 请求的Content-Type，默认值是[ContentType.json]. 也可以用ContentType.parse("application/x-www-form-urlencoded")
         contentType: ContentType.json,
-        //表示期望以那种格式(方式)接受响应数据。接受三种类型 `json`, `stream`, `plain`, `bytes`. 默认值是 `json`,
+
+        /// 表示期望以那种格式(方式)接受响应数据。接受三种类型 `json`, `stream`, `plain`, `bytes`. 默认值是 `json`,
         responseType: ResponseType.json,
       );
 
       dio = new Dio(options);
-      //Cookie管理
+
+      /// Cookie管理
       dio.interceptors.add(CookieManager(CookieJar()));
 
-      //添加拦截器
-      dio.interceptors.add(InterceptorsWrapper(onRequest: (RequestOptions options) {
-        print("请求之前");
-        // Do something before request is sent
-        return options; //continue
+      /// 添加拦截器
+      dio.interceptors
+          .add(InterceptorsWrapper(onRequest: (RequestOptions options) {
+        if (Config.DEBUG) {
+          print("请求之前");
+        }
+        return options;
       }, onResponse: (Response response) {
-        print("响应之前");
-        // Do something with response data
-        return response; // continue
+        if (Config.DEBUG) {
+          print("响应之前");
+        }
+        return response;
       }, onError: (DioError e) {
-        print("错误之前");
-        // Do something with response error
-        return e; //continue
+        if (Config.DEBUG) {
+          print("错误之前");
+        }
+        return e;
       }));
-
     }
 
     return dio;
   }
 
   /// 清空 dio 对象
-  static clear () {
+  static clear() {
     dio = null;
   }
-
 }

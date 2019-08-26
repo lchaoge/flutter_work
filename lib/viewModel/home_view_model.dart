@@ -5,44 +5,45 @@ import 'package:flutter_work/model/home_banner_model.dart';
 import 'package:flutter_work/model/home_menu_model.dart';
 import 'package:flutter_work/model/home_report_model.dart';
 import 'package:flutter_work/model/home_weather_model.dart';
+import 'package:flutter_work/router/navigator_util.dart';
 import 'package:provide/provide.dart';
 import 'package:flutter_work/provide/home_provide.dart';
 
-
 class HomeViewModel {
-  static Future getHomeData(BuildContext context) async{
+  static Future getHomeData(BuildContext context) async {
     await Future.wait([
-      HomeDao.selectBanner(context).then((res){
+      HomeDao.selectBanner(context).then((res) {
         return res;
       }),
-      HomeDao.selectHomeMenu(context).then((res){
+      HomeDao.selectHomeMenu(context).then((res) {
         return res;
       }),
-      HomeDao.selectMyRtSale(context).then((res){
+      HomeDao.selectMyRtSale(context).then((res) {
         return res;
       }),
-      HomeDao.selectWeather(context).then((res){
+      HomeDao.selectWeather(context).then((res) {
         return res;
       })
-    ]).then((results){
+    ]).then((results) {
       if (results[0] != null) {
         HomeBannerModel homeBannerModel = HomeBannerModel.fromJson(results[0]);
         Provide.value<HomeProvide>(context).setHomeBanner(homeBannerModel);
       }
-      if(results[1]!=null){
+      if (results[1] != null) {
         HomeMenuModel homeMenuModel = HomeMenuModel.fromJson(results[1]);
         Provide.value<HomeProvide>(context).setHomeMenu(homeMenuModel);
       }
-      if(results[2]!=null){
+      if (results[2] != null) {
         HomeReportModel homeMenuModel = HomeReportModel.fromJson(results[2]);
         Provide.value<HomeProvide>(context).setHomeReport(homeMenuModel);
       }
-      if(results[3]!=null){
-        HomeWeatherModel homeWeatherModel = HomeWeatherModel.fromJson(results[3]);
+      if (results[3] != null) {
+        HomeWeatherModel homeWeatherModel =
+            HomeWeatherModel.fromJson(results[3]);
         Provide.value<HomeProvide>(context).setHomeWeather(homeWeatherModel);
       }
-    }).catchError((e){
-      PublicUtils.toast(e);
+    }).catchError((error) {
+      // NavigatorUtil.goErrorPage(context, true);
     });
   }
 }

@@ -1,21 +1,27 @@
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_work/common/style/style.dart';
 import 'package:flutter_work/common/utils/public_utils.dart';
 import 'package:flutter_work/model/home_menu_model.dart';
 import 'package:flutter_work/provide/home_provide.dart';
 import 'package:flutter_work/router/navigator_util.dart';
 import 'package:provide/provide.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class HomeMenuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(child: Provide<HomeProvide>(
       builder: (context, child, data) {
-        MenuInfo menuInfo = data.homeMenuModel.data.menuInfo;
-        return Column(
-          children: _containerUI(context, menuInfo.cid),
-        );
+        if (data.homeMenuModel.code == '0000') {
+          MenuInfo menuInfo = data.homeMenuModel.data.menuInfo;
+          return Column(
+            children: _containerUI(context, menuInfo.cid),
+          );
+        } else {
+          return Container();
+        }
       },
     ));
   }
@@ -71,7 +77,15 @@ class HomeMenuWidget extends StatelessWidget {
     return InkWell(
       onTap: () {
         if (item.isJumpWeb == 1) {
-          NavigatorUtil.goWebViewPage(context, true, item);
+          Map params = {
+            "isSiteUse": item.isSiteUse,
+            "title": item.menuName,
+            "url": item.menuUrl,
+            "isAppTitle": item.isAppTitle
+          };
+          NavigatorUtil.goWebViewPage(context, false, params);
+        } else {
+          PublicUtils.toast('暂未开发');
         }
       },
       child: Container(
@@ -84,10 +98,13 @@ class HomeMenuWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Image.network(
-              '${item.menuIcon}',
+            FadeInImage.memoryNetwork(
               width: ScreenUtil().setWidth(26.0),
               height: ScreenUtil().setHeight(26.0),
+              placeholder: kTransparentImage,
+              image: item.menuIcon != null
+                  ? '${item.menuIcon}'
+                  : WMIcons.IMAGE_LOGO,
             ),
             Container(
               margin: EdgeInsets.only(top: 7.0),

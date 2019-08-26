@@ -13,8 +13,6 @@ import 'package:flutter_work/widget/wmui_nonetwork_widget.dart';
 import 'package:provide/provide.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_easyrefresh/bezier_circle_header.dart';
-import 'package:pk_skeleton/pk_skeleton.dart';
-import 'package:flutter_skeleton/flutter_skeleton.dart';
 
 /// 工作台
 class HomePage extends StatelessWidget {
@@ -37,7 +35,7 @@ class HomePage extends StatelessWidget {
               } else {
                 return Container(
                     child: EasyRefresh(
-                  firstRefresh: true,
+                      firstRefresh: true,
                   onRefresh: () async {
                     await HomeViewModel.getHomeData(context);
                   },
@@ -55,8 +53,9 @@ class HomePage extends StatelessWidget {
                 ));
               }
             } else {
-              return PKCardPageSkeleton(
-                totalLines: 5,
+              return WMuiLoadingWidget(
+                title: '移动物美',
+                fontSize: 40.0,
               );
             }
           },

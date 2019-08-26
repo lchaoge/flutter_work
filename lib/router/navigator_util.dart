@@ -21,6 +21,12 @@ class NavigatorUtil {
     );
   }
 
+  /// 错误页
+  static void goErrorPage(BuildContext context, bool replace) {
+    basePage(context, RouterConstant.errorPage, replace,
+        transition: TransitionType.inFromBottom);
+  }
+
   /// 跳转到登录
   static void goLoginPage(BuildContext context, bool replace) {
     basePage(context, RouterConstant.loginPage, replace,
@@ -33,16 +39,23 @@ class NavigatorUtil {
   }
 
   /// webview
-  static void goWebViewPage(BuildContext context, bool replace, Cid item) {
-    if(item.isSiteUse == 1){
+  static void goWebViewPage(BuildContext context, bool replace, Map params) {
+    if(params['isSiteUse'] == 1){
       // Provide.value<UserInfoProvide>(context).userInfoModel.data.;
       // Provide.value<MemberProvide>(context).memberModel;
-      item.menuUrl = item.menuUrl.replaceAll('{siteNo}', '1163').replaceAll('{siteName}', '惠新店');
+      params['url'] = params['url'].replaceAll('{siteNo}', '1163').replaceAll('{siteName}', '惠新店');
     }
-    String menuName = Uri.encodeComponent(item.menuName);
-    String menuUrl = Uri.encodeComponent(item.menuUrl);
-    String isAppTitle = Uri.encodeComponent('${item.isAppTitle}');
-    String url = RouterConstant.webviewPage + '?title=$menuName&url=$menuUrl&isAppTitle=$isAppTitle';
+    if(params['title'] !=null){
+      params['title'] = Uri.encodeComponent('${params['title']}');
+    }
+    if(params["url"]!=null){
+      params["url"] = Uri.encodeComponent('${params["url"]}');
+    }
+    if(params["isAppTitle"]!=null){
+      params["isAppTitle"] = Uri.encodeComponent('${params["isAppTitle"]}');
+    }
+    
+    String url = RouterConstant.webviewPage + '?title=${params["title"]}&url=${params["url"]}&isAppTitle=${params["isAppTitle"]}';
     basePage(context, url, replace);
   }
 

@@ -8,6 +8,8 @@ class Routes {
   static void configureRoutes(Router router) {
     // 找不到页面
     router.notFoundHandler = errorPageHandler;
+    // 错误页
+    router.define(RouterConstant.errorPage, handler: errorPageHandler);
     // 登录
     router.define(RouterConstant.loginPage, handler: loginPageHandler);
     // 扫码

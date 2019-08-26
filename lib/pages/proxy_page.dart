@@ -13,11 +13,13 @@ class ProxyPage extends StatefulWidget {
   _ProxyPageState createState() => _ProxyPageState();
 }
 
-class _ProxyPageState extends State<ProxyPage>
-    with SingleTickerProviderStateMixin {
+class _ProxyPageState extends State<ProxyPage> with AutomaticKeepAliveClientMixin,SingleTickerProviderStateMixin {
   TabController _controller;
   int _currentIndex = 1;
   VoidCallback onchanged;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -39,29 +41,26 @@ class _ProxyPageState extends State<ProxyPage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);//必须添加
     return DefaultTabController(
         length: 1,
         child: Container(
           child: Scaffold(
               appBar: _appbar(context),
-              body: Provide<IndexProvide>(
-                builder: (context, child, data) {
-                  // int proxyTabsIndex = data.proxyTabsIndex;
-                  return TabBarView(
-                    children: [
-                      Container(
-                        child: ProxyTaskPage(),
-                      )
-                    ],
-                  );
-                },
-              )),
+              body: TabBarView(
+                children: [
+                  Container(
+                    child: ProxyTaskPage(),
+                  )
+                ],
+              )
+            ),
         ));
   }
 
   _appbar(BuildContext context) {
     return AppBar(
-      elevation: 0.5,
+        elevation: 0.5,
         backgroundColor: Colors.white,
         centerTitle: false,
         leading: Container(
@@ -76,7 +75,8 @@ class _ProxyPageState extends State<ProxyPage>
                 child: Text(
                   '任务',
                   style: TextStyle(
-                    color: Colors.black, fontSize: ScreenUtil().setSp(20.0),
+                    color: Colors.black,
+                    fontSize: ScreenUtil().setSp(20.0),
                     fontWeight: FontWeight.w500,
                   ),
                 ),

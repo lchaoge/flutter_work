@@ -1,8 +1,8 @@
 import 'package:flutter_work/common/config/config.dart';
 
 
-const String mappURL = Config.DEBUG ? 'http://10.101.200.82:8451' : 'http://mapp.wumart.com';
-const String proxyURL = Config.DEBUG ? 'http://mworkweb.wumart.com/wmWorkegn' : 'http://workegn.wumart.com';
+const String mappURL = Config.DEBUG ? 'http://10.101.200.82:8451' : '';
+const String proxyURL = Config.DEBUG ? 'http://mworkweb.wumart.com/wmWorkegn' : '';
 
 
 
