@@ -1,4 +1,4 @@
-/**
+/*
  * 设备信息
  * Created by chaoge
  * on 2019/7/25.

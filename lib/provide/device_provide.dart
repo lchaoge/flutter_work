@@ -4,7 +4,7 @@ import 'package:device_info/device_info.dart';
 import 'dart:io';
 import 'package:wifi/wifi.dart';
 
-/**
+/*
  * 设备信息状态
  * Created by chaoge
  * on 2019/7/25.

@@ -5,7 +5,7 @@ import 'package:flutter_work/model/user_info_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
-/**
+/*
  * 用户信息状态
  * Created by chaoge
  * on 2019/7/25.

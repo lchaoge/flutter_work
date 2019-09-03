@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_work/common/utils/public_utils.dart';
-// import 'package:jpush_flutter/jpush_flutter.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
 

@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_work/common/style/style.dart';
 import 'package:flutter_work/pages/proxy_task_page.dart';
-import 'package:flutter_work/provide/index_provide.dart';
-import 'package:provide/provide.dart';
 
-/**
+/*
  * 待办页面
  */
 class ProxyPage extends StatefulWidget {

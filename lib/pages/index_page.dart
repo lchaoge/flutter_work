@@ -7,10 +7,6 @@ import 'package:flutter_work/pages/proxy_page.dart';
 import 'package:flutter_work/pages/member_page.dart';
 import 'package:flutter_work/common/style/style.dart';
 import 'package:flutter_work/provide/index_provide.dart';
-import 'package:flutter_work/viewModel/home_view_model.dart';
-import 'package:flutter_work/viewModel/mail_list_view_model.dart';
-import 'package:flutter_work/viewModel/member_view_model.dart';
-import 'package:flutter_work/viewModel/proxy_view_model.dart';
 import 'package:provide/provide.dart';
 
 class IndexPage extends StatefulWidget{

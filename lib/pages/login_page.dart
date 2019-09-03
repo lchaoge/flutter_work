@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,7 +13,7 @@ import 'package:flutter_work/provide/device_provide.dart';
 import 'package:flutter_work/provide/user_info_provide.dart';
 import 'package:common_utils/common_utils.dart';
 
-/**
+/*
  * 登录
  */
 class LoginPage extends StatelessWidget {

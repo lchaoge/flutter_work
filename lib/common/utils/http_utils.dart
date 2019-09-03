@@ -5,8 +5,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter_work/common/config/config.dart';
 import 'dart:async';
 
-import 'package:flutter_work/common/utils/public_utils.dart';
-
 /*
  * 封装 restful 请求
  * 

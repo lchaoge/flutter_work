@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter_work/common/utils/url_mapping.dart';
 import 'package:flutter_work/common/utils/http_utils.dart';
 import 'package:flutter_work/model/device_model.dart';

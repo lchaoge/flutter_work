@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-import 'package:flutter_work/common/utils/public_utils.dart';
 import 'package:flutter_work/router/navigator_util.dart';
 import 'package:flutter_work/widget/wmui_loading_widget.dart';
 
