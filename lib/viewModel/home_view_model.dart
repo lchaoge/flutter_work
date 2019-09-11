@@ -4,6 +4,7 @@ import 'package:flutter_work/model/home_banner_model.dart';
 import 'package:flutter_work/model/home_menu_model.dart';
 import 'package:flutter_work/model/home_report_model.dart';
 import 'package:flutter_work/model/home_weather_model.dart';
+import 'package:flutter_work/router/navigator_util.dart';
 import 'package:provide/provide.dart';
 import 'package:flutter_work/provide/home_provide.dart';
 
@@ -41,7 +42,7 @@ class HomeViewModel {
         Provide.value<HomeProvide>(context).setHomeWeather(homeWeatherModel);
       }
     }).catchError((error) {
-      // NavigatorUtil.goErrorPage(context, true);
+      NavigatorUtil.goErrorPage(context, true);
     });
   }
 }

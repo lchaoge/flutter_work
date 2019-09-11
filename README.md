@@ -5,7 +5,7 @@ flutter 仿移动物美.
 ## 运行方式
 
 - 查看一下版本号是否正确  Flutter SDK (v1.7.8-hotfix.4)
-// 如果产生其他依赖无法编译的问题，可以尝试将pubspec.yaml中的dependencies中的所有依赖的"^"去掉，重新编译尝试。
+- 如果产生其他依赖无法编译的问题，可以尝试将pubspec.yaml中的dependencies中的所有依赖的"^"去掉，重新编译尝试。
 ```dart
   flutter --version
 ```
